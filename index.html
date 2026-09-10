@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -234,7 +235,6 @@
             color: #000000;
         }
 
-        /* Кнопка Google Sign-In */
         .btn-google {
             width: 100%;
             background: #1a1a1a;
@@ -375,6 +375,7 @@
             font-size: 1.1rem;
         }
 
+        /* Форум */
         .topics-list {
             margin-top: 20px;
         }
@@ -384,7 +385,6 @@
             padding: 15px;
             margin-bottom: 15px;
             background: rgba(0, 255, 255, 0.05);
-            cursor: pointer;
             transition: all 0.3s;
         }
 
@@ -423,10 +423,27 @@
             border-left: 2px solid #00ff00;
         }
 
+        .reply-form {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .reply-form input {
+            flex: 1;
+            padding: 8px;
+            background: #000000;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+        }
+
         .hidden {
             display: none;
         }
 
+        /* Мессенджер */
         .messenger-layout {
             display: flex;
             gap: 20px;
@@ -468,6 +485,177 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+        }
+
+        /* Соцсеть */
+        .social-feed {
+            margin-top: 20px;
+        }
+
+        .post {
+            border: 2px solid #ff00ff;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: rgba(255, 0, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .post:hover {
+            background: rgba(255, 0, 255, 0.1);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ff00ff;
+        }
+
+        .post-author {
+            color: #ffff00;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .post-time {
+            color: #888888;
+            font-size: 0.9rem;
+        }
+
+        .post-text {
+            color: #00ff00;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .post-image {
+            max-width: 100%;
+            max-height: 400px;
+            border: 2px solid #00ffff;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ff00ff;
+        }
+
+        .post-action {
+            background: none;
+            border: none;
+            color: #00ffff;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            padding: 5px 10px;
+        }
+
+        .post-action:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        .post-action.liked {
+            color: #ff00ff;
+        }
+
+        .comments-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #00ffff;
+        }
+
+        .comment {
+            margin-bottom: 10px;
+            padding: 8px;
+            background: rgba(0, 255, 255, 0.05);
+            border-left: 2px solid #00ffff;
+        }
+
+        .comment-author {
+            color: #ffff00;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .comment-text {
+            color: #00ff00;
+        }
+
+        .comment-form {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .comment-form input {
+            flex: 1;
+            padding: 8px;
+            background: #000000;
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+        }
+
+        .create-post-form {
+            border: 2px solid #ffff00;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 0, 0.05);
+        }
+
+        .create-post-form textarea {
+            width: 100%;
+            padding: 10px;
+            background: #000000;
+            border: 2px solid #ffff00;
+            color: #ffff00;
+            font-family: 'VT323', monospace;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+        .file-input-wrapper {
+            margin-bottom: 10px;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            display: none;
+        }
+
+        .file-input-label {
+            display: inline-block;
+            background: #330033;
+            color: #ff00ff;
+            border: 2px solid #ff00ff;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .file-input-label:hover {
+            background: #ff00ff;
+            color: #000000;
+        }
+
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 10px;
+            border: 2px solid #00ffff;
+            display: none;
         }
 
         footer {
@@ -587,7 +775,7 @@
             </div>
         </div>
 
-        <!-- Экран ввода никнейма для Google-пользователей -->
+        <!-- Экран ввода никнейма -->
         <div id="nickname-screen" class="screen">
             <div class="window">
                 <div class="window-title">
@@ -611,12 +799,14 @@
         <!-- Главный экран -->
         <div id="main-screen" class="screen">
             <nav class="main-nav">
-                <button class="nav-btn active" onclick="showSection('chat')">💬 global chat</button>
-                <button class="nav-btn" onclick="showSection('forum')">📋 forum</button>
-                <button class="nav-btn" onclick="showSection('messenger')">✉️ messenger</button>
+                <button class="nav-btn active" onclick="showSection('chat', this)">💬 global chat</button>
+                <button class="nav-btn" onclick="showSection('forum', this)">📋 forum</button>
+                <button class="nav-btn" onclick="showSection('social', this)">📸 social</button>
+                <button class="nav-btn" onclick="showSection('messenger', this)">✉️ messenger</button>
                 <button class="nav-btn" onclick="logout()">🚪 logout</button>
             </nav>
 
+            <!-- Глобальный чат -->
             <div id="chat-section" class="section active">
                 <div class="window">
                     <div class="window-title">
@@ -632,6 +822,7 @@
                 </div>
             </div>
 
+            <!-- Форум -->
             <div id="forum-section" class="section">
                 <div class="window">
                     <div class="window-title">
@@ -641,8 +832,12 @@
                         <button class="btn-primary" onclick="showNewTopicForm()">[ + new topic ]</button>
                         
                         <div id="new-topic-form" class="form hidden">
-                            <input type="text" id="topic-title" placeholder="topic title" required>
-                            <textarea id="topic-content" placeholder="write your post..." rows="4" required></textarea>
+                            <div class="form-group">
+                                <input type="text" id="topic-title" placeholder="topic title" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="topic-content" placeholder="write your post..." rows="4" required></textarea>
+                            </div>
                             <button onclick="createTopic()" class="btn-primary">[ post topic ]</button>
                             <button onclick="hideNewTopicForm()" class="btn-secondary">[ cancel ]</button>
                         </div>
@@ -652,6 +847,32 @@
                 </div>
             </div>
 
+            <!-- Соцсеть -->
+            <div id="social-section" class="section">
+                <div class="window">
+                    <div class="window-title">
+                        <span>:: social feed ::</span>
+                    </div>
+                    <div class="window-content">
+                        <!-- Форма создания поста -->
+                        <div class="create-post-form">
+                            <h3 style="color: #ffff00; margin-bottom: 10px;">create new post:</h3>
+                            <textarea id="post-text" placeholder="what's on your mind?" rows="3"></textarea>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="post-image" accept="image/*" onchange="previewImage(event)">
+                                <label for="post-image" class="file-input-label">[ choose image ]</label>
+                                <img id="image-preview" class="image-preview" alt="preview">
+                            </div>
+                            <button onclick="createPost()" class="btn-primary">[ publish post ]</button>
+                        </div>
+
+                        <!-- Лента постов -->
+                        <div id="social-feed" class="social-feed"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Мессенджер -->
             <div id="messenger-section" class="section">
                 <div class="window">
                     <div class="window-title">
@@ -689,23 +910,22 @@
     
     <script>
         // ============================================
-        // ВАЖНО: Замени эти данные на свои из Firebase!
+        // FIREBASE CONFIG - ЗАМЕНИ НА СВОИ ДАННЫЕ!
         // ============================================
         const firebaseConfig = {
             apiKey: "AIzaSyCKa3-YQd0XjC_VW07lHNvfw-TMWVp-Zbg",
-            authDomain: "geenyz-restplace.firebaseapp.com",
-            databaseURL: "https://geenyz-restplace-default-rtdb.firebaseio.com/",
-            projectId: "geenyz-restplace",
-            storageBucket: "geenyz-restplace.firebasestorage.app",
-            messagingSenderId: "642497027423",
-            appId: "1:642497027423:web:1d72280e3ff0141abaeaea"
+  authDomain: "geenyz-restplace.firebaseapp.com",
+            databaseURL: "https://geenyz-restplace-default-rtdb.firebaseio.com",
+  projectId: "geenyz-restplace",
+  storageBucket: "geenyz-restplace.firebasestorage.app",
+  messagingSenderId: "642497027423",
+  appId: "1:642497027423:web:1d72280e3ff0141abaeaea",
+         
         };
 
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const database = firebase.database();
-        
-        // Google провайдер
         const googleProvider = new firebase.auth.GoogleAuthProvider();
 
         let currentUser = null;
@@ -729,36 +949,26 @@
             document.querySelectorAll('.tab-btn')[0].classList.remove('active');
         }
 
-        // Google Sign-In
         async function googleSignIn() {
             try {
                 const result = await auth.signInWithPopup(googleProvider);
                 const user = result.user;
-                
-                // Проверяем, есть ли уже этот пользователь в БД
                 const userSnapshot = await database.ref('users/' + user.uid).once('value');
                 const userData = userSnapshot.val();
                 
                 if (!userData) {
-                    // Новый пользователь - показываем форму ввода никнейма
                     currentUser = user;
                     document.getElementById('auth-screen').classList.remove('active');
                     document.getElementById('nickname-screen').classList.add('active');
-                } else {
-                    // Существующий пользователь - сразу входим
-                    alert('Welcome back, ' + userData.nickname + '!');
                 }
             } catch (error) {
                 alert('Google Sign-In error: ' + error.message);
             }
         }
 
-        // Сохранение никнейма для нового Google-пользователя
         document.getElementById('nickname-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const nickname = document.getElementById('new-nickname').value.trim();
-            
             if (!nickname || !currentUser) return;
             
             try {
@@ -769,25 +979,20 @@
                     online: true,
                     provider: 'google'
                 });
-                
                 document.getElementById('nickname-screen').classList.remove('active');
-                alert('Nickname saved! Welcome, ' + nickname + '!');
             } catch (error) {
-                alert('Error saving nickname: ' + error.message);
+                alert('Error: ' + error.message);
             }
         });
 
-        // Регистрация
         document.getElementById('register-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const email = document.getElementById('register-email').value;
             const nickname = document.getElementById('register-nickname').value;
             const password = document.getElementById('register-password').value;
 
             try {
                 const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                
                 await database.ref('users/' + userCredential.user.uid).set({
                     email: email,
                     nickname: nickname,
@@ -795,39 +1000,31 @@
                     online: true,
                     provider: 'email'
                 });
-
-                alert('Account created successfully!');
             } catch (error) {
                 alert('Error: ' + error.message);
             }
         });
 
-        // Вход
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
 
             try {
                 await auth.signInWithEmailAndPassword(email, password);
-                alert('Welcome back!');
             } catch (error) {
                 alert('Error: ' + error.message);
             }
         });
 
-        // Отслеживание состояния аутентификации
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 currentUser = user;
-                
                 const userSnapshot = await database.ref('users/' + user.uid).once('value');
                 const userData = userSnapshot.val();
                 
                 if (userData) {
                     currentUser.nickname = userData.nickname;
-                    
                     await database.ref('users/' + user.uid + '/online').set(true);
                     
                     document.getElementById('auth-screen').classList.remove('active');
@@ -836,6 +1033,7 @@
                     
                     loadChat();
                     loadForumTopics();
+                    loadSocialFeed();
                     loadOnlineUsers();
                 }
             } else {
@@ -863,12 +1061,12 @@
         // НАВИГАЦИЯ
         // ============================================
         
-        function showSection(section) {
+        function showSection(section, btn) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             
             document.getElementById(section + '-section').classList.add('active');
-            event.target.classList.add('active');
+            if (btn) btn.classList.add('active');
         }
 
         // ============================================
@@ -877,10 +1075,8 @@
         
         function loadChat() {
             const chatRef = database.ref('chat').orderByChild('timestamp').limitToLast(50);
-            
             chatRef.on('child_added', (snapshot) => {
-                const message = snapshot.val();
-                displayChatMessage(message);
+                displayChatMessage(snapshot.val());
             });
         }
 
@@ -888,7 +1084,6 @@
             const chatMessages = document.getElementById('chat-messages');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message';
-            
             const time = new Date(message.timestamp).toLocaleTimeString();
             
             messageDiv.innerHTML = `
@@ -903,25 +1098,21 @@
 
         document.getElementById('chat-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const input = document.getElementById('chat-input');
             const text = input.value.trim();
-            
             if (!text || !currentUser) return;
             
-            const message = {
+            await database.ref('chat').push({
                 uid: currentUser.uid,
                 nickname: currentUser.nickname,
                 text: text,
                 timestamp: Date.now()
-            };
-            
-            await database.ref('chat').push(message);
+            });
             input.value = '';
         });
 
         // ============================================
-        // ФОРУМ
+        // ФОРУМ (ИСПРАВЛЕННЫЙ)
         // ============================================
         
         function showNewTopicForm() {
@@ -935,19 +1126,16 @@
         async function createTopic() {
             const title = document.getElementById('topic-title').value.trim();
             const content = document.getElementById('topic-content').value.trim();
-            
             if (!title || !content || !currentUser) return;
             
-            const topic = {
+            const newTopicRef = database.ref('forum').push();
+            await newTopicRef.set({
                 title: title,
                 content: content,
                 author: currentUser.nickname,
                 authorUid: currentUser.uid,
-                createdAt: Date.now(),
-                replies: []
-            };
-            
-            await database.ref('forum').push(topic);
+                createdAt: Date.now()
+            });
             
             document.getElementById('topic-title').value = '';
             document.getElementById('topic-content').value = '';
@@ -956,11 +1144,8 @@
 
         function loadForumTopics() {
             const forumRef = database.ref('forum').orderByChild('createdAt');
-            
             forumRef.on('child_added', (snapshot) => {
-                const topic = snapshot.val();
-                const topicId = snapshot.key;
-                displayTopic(topic, topicId);
+                displayTopic(snapshot.val(), snapshot.key);
             });
         }
 
@@ -989,10 +1174,8 @@
 
         function loadReplies(topicId) {
             const repliesRef = database.ref('forum/' + topicId + '/replies');
-            
             repliesRef.on('child_added', (snapshot) => {
-                const reply = snapshot.val();
-                displayReply(topicId, reply);
+                displayReply(topicId, snapshot.val());
             });
         }
 
@@ -1000,30 +1183,183 @@
             const repliesDiv = document.getElementById('replies-' + topicId);
             const replyDiv = document.createElement('div');
             replyDiv.className = 'reply';
-            
             replyDiv.innerHTML = `
                 <strong>${escapeHtml(reply.author)}:</strong> ${escapeHtml(reply.text)}
             `;
-            
             repliesDiv.appendChild(replyDiv);
         }
 
         async function addReply(event, topicId) {
             event.preventDefault();
-            
             const form = event.target;
             const input = form.querySelector('input');
             const text = input.value.trim();
-            
             if (!text || !currentUser) return;
             
-            const reply = {
+            await database.ref('forum/' + topicId + '/replies').push({
                 author: currentUser.nickname,
                 text: text,
                 timestamp: Date.now()
+            });
+            input.value = '';
+        }
+
+        // ============================================
+        // СОЦСЕТЬ
+        // ============================================
+        
+        let currentImageData = null;
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentImageData = e.target.result;
+                const preview = document.getElementById('image-preview');
+                preview.src = currentImageData;
+                preview.style.display = 'block';
             };
-            
-            await database.ref('forum/' + topicId + '/replies').push(reply);
+            reader.readAsDataURL(file);
+        }
+
+        async function createPost() {
+            const text = document.getElementById('post-text').value.trim();
+            if (!text && !currentImageData) {
+                alert('Please add text or image!');
+                return;
+            }
+            if (!currentUser) return;
+
+            const postData = {
+                author: currentUser.nickname,
+                authorUid: currentUser.uid,
+                text: text,
+                image: currentImageData,
+                createdAt: Date.now(),
+                likes: 0
+            };
+
+            await database.ref('social/posts').push(postData);
+
+            document.getElementById('post-text').value = '';
+            document.getElementById('post-image').value = '';
+            document.getElementById('image-preview').style.display = 'none';
+            currentImageData = null;
+        }
+
+        function loadSocialFeed() {
+            const postsRef = database.ref('social/posts').orderByChild('createdAt');
+            postsRef.on('child_added', (snapshot) => {
+                displayPost(snapshot.val(), snapshot.key);
+            });
+        }
+
+        function displayPost(post, postId) {
+            const feed = document.getElementById('social-feed');
+            const postDiv = document.createElement('div');
+            postDiv.className = 'post';
+            postDiv.id = 'post-' + postId;
+
+            const date = new Date(post.createdAt).toLocaleString();
+            const imageHtml = post.image ? `<img src="${post.image}" class="post-image" alt="post image">` : '';
+            const textHtml = post.text ? `<div class="post-text">${escapeHtml(post.text)}</div>` : '';
+
+            postDiv.innerHTML = `
+                <div class="post-header">
+                    <span class="post-author">${escapeHtml(post.author)}</span>
+                    <span class="post-time">${date}</span>
+                </div>
+                ${textHtml}
+                ${imageHtml}
+                <div class="post-actions">
+                    <button class="post-action" onclick="toggleLike('${postId}', this)">
+                        ❤️ <span id="likes-${postId}">${post.likes || 0}</span> likes
+                    </button>
+                    <button class="post-action" onclick="toggleComments('${postId}')">
+                        💬 comments
+                    </button>
+                </div>
+                <div class="comments-section hidden" id="comments-${postId}">
+                    <div id="comments-list-${postId}"></div>
+                    <form class="comment-form" onsubmit="addComment(event, '${postId}')">
+                        <input type="text" placeholder="write a comment..." required>
+                        <button type="submit" class="btn-send">[ post ]</button>
+                    </form>
+                </div>
+            `;
+
+            feed.insertBefore(postDiv, feed.firstChild);
+            loadComments(postId);
+            checkIfLiked(postId, postDiv);
+        }
+
+        async function toggleLike(postId, btn) {
+            if (!currentUser) return;
+
+            const likeRef = database.ref('social/likes/' + postId + '/' + currentUser.uid);
+            const snapshot = await likeRef.once('value');
+
+            if (snapshot.exists()) {
+                await likeRef.remove();
+                await database.ref('social/posts/' + postId + '/likes').transaction(current => (current || 1) - 1);
+                btn.classList.remove('liked');
+            } else {
+                await likeRef.set(true);
+                await database.ref('social/posts/' + postId + '/likes').transaction(current => (current || 0) + 1);
+                btn.classList.add('liked');
+            }
+
+            const likesSnapshot = await database.ref('social/posts/' + postId + '/likes').once('value');
+            document.getElementById('likes-' + postId).textContent = likesSnapshot.val() || 0;
+        }
+
+        async function checkIfLiked(postId, postDiv) {
+            if (!currentUser) return;
+            const likeRef = database.ref('social/likes/' + postId + '/' + currentUser.uid);
+            const snapshot = await likeRef.once('value');
+            if (snapshot.exists()) {
+                const likeBtn = postDiv.querySelector('.post-action');
+                likeBtn.classList.add('liked');
+            }
+        }
+
+        function toggleComments(postId) {
+            const commentsSection = document.getElementById('comments-' + postId);
+            commentsSection.classList.toggle('hidden');
+        }
+
+        function loadComments(postId) {
+            const commentsRef = database.ref('social/comments/' + postId).orderByChild('timestamp');
+            commentsRef.on('child_added', (snapshot) => {
+                displayComment(postId, snapshot.val());
+            });
+        }
+
+        function displayComment(postId, comment) {
+            const commentsList = document.getElementById('comments-list-' + postId);
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'comment';
+            commentDiv.innerHTML = `
+                <span class="comment-author">${escapeHtml(comment.author)}:</span>
+                <span class="comment-text">${escapeHtml(comment.text)}</span>
+            `;
+            commentsList.appendChild(commentDiv);
+        }
+
+        async function addComment(event, postId) {
+            event.preventDefault();
+            const form = event.target;
+            const input = form.querySelector('input');
+            const text = input.value.trim();
+            if (!text || !currentUser) return;
+
+            await database.ref('social/comments/' + postId).push({
+                author: currentUser.nickname,
+                text: text,
+                timestamp: Date.now()
+            });
             input.value = '';
         }
 
@@ -1033,7 +1369,6 @@
         
         function loadOnlineUsers() {
             const usersRef = database.ref('users');
-            
             usersRef.on('value', (snapshot) => {
                 const users = snapshot.val();
                 const onlineUsersDiv = document.getElementById('online-users');
@@ -1053,27 +1388,20 @@
 
         function selectChatUser(uid, nickname) {
             currentChatUser = { uid, nickname };
-            
             document.querySelectorAll('.user-item').forEach(item => {
                 item.classList.remove('active');
-                if (item.textContent === nickname) {
-                    item.classList.add('active');
-                }
+                if (item.textContent === nickname) item.classList.add('active');
             });
-            
             document.getElementById('private-chat-input').placeholder = `message ${nickname}...`;
             document.getElementById('private-chat-messages').innerHTML = '';
-            
             loadPrivateChat(uid);
         }
 
         function loadPrivateChat(otherUid) {
             const chatId = getChatId(currentUser.uid, otherUid);
             const messagesRef = database.ref('private_messages/' + chatId).orderByChild('timestamp');
-            
             messagesRef.on('child_added', (snapshot) => {
-                const message = snapshot.val();
-                displayPrivateMessage(message);
+                displayPrivateMessage(snapshot.val());
             });
         }
 
@@ -1081,40 +1409,31 @@
             const chatMessages = document.getElementById('private-chat-messages');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message';
-            
             const time = new Date(message.timestamp).toLocaleTimeString();
-            
             messageDiv.innerHTML = `
                 <span class="message-author">${escapeHtml(message.senderNickname)}:</span>
                 <span class="message-time">${time}</span>
                 <div class="message-text">${escapeHtml(message.text)}</div>
             `;
-            
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         document.getElementById('private-chat-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const input = document.getElementById('private-chat-input');
             const text = input.value.trim();
-            
             if (!text || !currentUser || !currentChatUser) {
                 alert('Please select a user to chat with!');
                 return;
             }
-            
             const chatId = getChatId(currentUser.uid, currentChatUser.uid);
-            
-            const message = {
+            await database.ref('private_messages/' + chatId).push({
                 senderUid: currentUser.uid,
                 senderNickname: currentUser.nickname,
                 text: text,
                 timestamp: Date.now()
-            };
-            
-            await database.ref('private_messages/' + chatId).push(message);
+            });
             input.value = '';
         });
 
