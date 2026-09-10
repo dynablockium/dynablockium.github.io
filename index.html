@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>geeny's restplace</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background: #000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4"><rect width="4" height="4" fill="%23001a00"/><rect width="2" height="2" fill="%23003300"/></svg>');
+            color: #00ff00;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            z-index: 9999;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border: 3px double #00ff00;
+            padding: 20px;
+            background: rgba(0, 20, 0, 0.8);
+        }
+
+        .title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2rem;
+            color: #ff00ff;
+            text-shadow: 
+                0 0 10px #ff00ff,
+                0 0 20px #ff00ff,
+                0 0 30px #ff00ff;
+            margin-bottom: 10px;
+        }
+
+        .star {
+            color: #ffff00;
+            animation: spin 2s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .welcome-text {
+            font-size: 1.2rem;
+            color: #00ffff;
+            margin-top: 10px;
+        }
+
+        .window {
+            border: 2px solid #00ff00;
+            background: rgba(0, 10, 0, 0.9);
+            margin-bottom: 20px;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 0, 0.3),
+                inset 0 0 20px rgba(0, 255, 0, 0.1);
+        }
+
+        .window-title {
+            background: linear-gradient(90deg, #000080, #0000ff);
+            color: #ffffff;
+            padding: 5px 10px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00ff00;
+        }
+
+        .window-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .window-buttons span {
+            width: 20px;
+            height: 20px;
+            background: #c0c0c0;
+            border: 2px outset #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .window-content {
+            padding: 20px;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            background: #003300;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: #00ff00;
+            color: #000000;
+        }
+
+        .tab-btn.active {
+            background: #00ff00;
+            color: #000000;
+        }
+
+        .form {
+            display: none;
+        }
+
+        .form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00ffff;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background: #000000;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-family: 'VT323', monospace;
+            font-size: 1.1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff00ff;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        .btn-primary,
+        .btn-secondary,
+        .btn-send {
+            background: #003300;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            margin-right: 10px;
+        }
+
+        .btn-primary:hover,
+        .btn-send:hover {
+            background: #00ff00;
+            color: #000000;
+            box-shadow: 0 0 15px #00ff00;
+        }
+
+        .btn-secondary {
+            background: #330000;
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+
+        .btn-secondary:hover {
+            background: #ff0000;
+            color: #000000;
+        }
+
+        /* Кнопка Google Sign-In */
+        .btn-google {
+            width: 100%;
+            background: #1a1a1a;
+            color: #ffffff;
+            border: 2px solid #ff00ff;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+        }
+
+        .btn-google:hover {
+            background: #ff00ff;
+            color: #000000;
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        .btn-google svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #00ffff;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #00ffff;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: #000033;
+            color: #00ffff;
+            border: 2px solid #00ffff;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .nav-btn:hover {
+            background: #00ffff;
+            color: #000000;
+            box-shadow: 0 0 20px #00ffff;
+        }
+
+        .nav-btn.active {
+            background: #00ffff;
+            color: #000000;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .messages-container {
+            height: 400px;
+            overflow-y: auto;
+            border: 2px solid #00ff00;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-left: 3px solid #ff00ff;
+            background: rgba(255, 0, 255, 0.1);
+        }
+
+        .message-author {
+            color: #ffff00;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .message-time {
+            color: #888888;
+            font-size: 0.9rem;
+        }
+
+        .message-text {
+            color: #00ff00;
+            margin-top: 5px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            background: #000000;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-family: 'VT323', monospace;
+            font-size: 1.1rem;
+        }
+
+        .topics-list {
+            margin-top: 20px;
+        }
+
+        .topic {
+            border: 2px solid #00ffff;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: rgba(0, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .topic:hover {
+            background: rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .topic-title {
+            color: #ffff00;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .topic-meta {
+            color: #888888;
+            font-size: 0.9rem;
+        }
+
+        .topic-content {
+            margin-top: 10px;
+            color: #00ff00;
+        }
+
+        .replies {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #00ffff;
+        }
+
+        .reply {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.05);
+            border-left: 2px solid #00ff00;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .messenger-layout {
+            display: flex;
+            gap: 20px;
+            height: 500px;
+        }
+
+        .users-list {
+            width: 200px;
+            border: 2px solid #ff00ff;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        .users-list h3 {
+            color: #ff00ff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .user-item {
+            padding: 8px;
+            margin-bottom: 5px;
+            background: rgba(255, 0, 255, 0.1);
+            border: 1px solid #ff00ff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .user-item:hover {
+            background: rgba(255, 0, 255, 0.3);
+        }
+
+        .user-item.active {
+            background: #ff00ff;
+            color: #000000;
+        }
+
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 2px solid #00ff00;
+            color: #00ff00;
+        }
+
+        .visitor-counter {
+            margin-top: 10px;
+            color: #ffff00;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000000;
+            border: 1px solid #00ff00;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border: 1px solid #000000;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00ffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    
+    <div class="container">
+        <header>
+            <h1 class="title blink">
+                <span class="star">*</span> geeny's restplace <span class="star">*</span>
+            </h1>
+            <marquee behavior="scroll" direction="left" class="welcome-text">
+                welcome to the internet's coziest corner ~ est. 2026 ~ 
+            </marquee>
+        </header>
+
+        <!-- Экран входа/регистрации -->
+        <div id="auth-screen" class="screen active">
+            <div class="window">
+                <div class="window-title">
+                    <span>:: login/register ::</span>
+                    <div class="window-buttons">
+                        <span class="btn-minimize">_</span>
+                        <span class="btn-maximize">□</span>
+                        <span class="btn-close">×</span>
+                    </div>
+                </div>
+                <div class="window-content">
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="showLogin()">login</button>
+                        <button class="tab-btn" onclick="showRegister()">register</button>
+                    </div>
+                    
+                    <form id="login-form" class="form active">
+                        <div class="form-group">
+                            <label>username:</label>
+                            <input type="text" id="login-email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>password:</label>
+                            <input type="password" id="login-password" placeholder="********" required>
+                        </div>
+                        <button type="submit" class="btn-primary">[ enter ]</button>
+                        
+                        <div class="divider">~ or ~</div>
+                        
+                        <button type="button" class="btn-google" onclick="googleSignIn()">
+                            <svg viewBox="0 0 24 24">
+                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            sign in with google
+                        </button>
+                    </form>
+
+                    <form id="register-form" class="form">
+                        <div class="form-group">
+                            <label>username:</label>
+                            <input type="email" id="register-email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>nickname:</label>
+                            <input type="text" id="register-nickname" placeholder="cool_nickname" required>
+                        </div>
+                        <div class="form-group">
+                            <label>password:</label>
+                            <input type="password" id="register-password" placeholder="min 6 chars" required>
+                        </div>
+                        <button type="submit" class="btn-primary">[ create account ]</button>
+                        
+                        <div class="divider">~ or ~</div>
+                        
+                        <button type="button" class="btn-google" onclick="googleSignIn()">
+                            <svg viewBox="0 0 24 24">
+                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            sign up with google
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран ввода никнейма для Google-пользователей -->
+        <div id="nickname-screen" class="screen">
+            <div class="window">
+                <div class="window-title">
+                    <span>:: choose your nickname ::</span>
+                </div>
+                <div class="window-content">
+                    <p style="color: #00ffff; margin-bottom: 15px;">
+                        welcome, google user! please choose a nickname for the forum:
+                    </p>
+                    <form id="nickname-form">
+                        <div class="form-group">
+                            <label>nickname:</label>
+                            <input type="text" id="new-nickname" placeholder="your cool nickname" required>
+                        </div>
+                        <button type="submit" class="btn-primary">[ save nickname ]</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Главный экран -->
+        <div id="main-screen" class="screen">
+            <nav class="main-nav">
+                <button class="nav-btn active" onclick="showSection('chat')">💬 global chat</button>
+                <button class="nav-btn" onclick="showSection('forum')">📋 forum</button>
+                <button class="nav-btn" onclick="showSection('messenger')">✉️ messenger</button>
+                <button class="nav-btn" onclick="logout()">🚪 logout</button>
+            </nav>
+
+            <div id="chat-section" class="section active">
+                <div class="window">
+                    <div class="window-title">
+                        <span>:: global chat ::</span>
+                    </div>
+                    <div class="window-content">
+                        <div id="chat-messages" class="messages-container"></div>
+                        <form id="chat-form" class="chat-input">
+                            <input type="text" id="chat-input" placeholder="type your message..." required>
+                            <button type="submit" class="btn-send">[ send ]</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="forum-section" class="section">
+                <div class="window">
+                    <div class="window-title">
+                        <span>:: forum ::</span>
+                    </div>
+                    <div class="window-content">
+                        <button class="btn-primary" onclick="showNewTopicForm()">[ + new topic ]</button>
+                        
+                        <div id="new-topic-form" class="form hidden">
+                            <input type="text" id="topic-title" placeholder="topic title" required>
+                            <textarea id="topic-content" placeholder="write your post..." rows="4" required></textarea>
+                            <button onclick="createTopic()" class="btn-primary">[ post topic ]</button>
+                            <button onclick="hideNewTopicForm()" class="btn-secondary">[ cancel ]</button>
+                        </div>
+
+                        <div id="forum-topics" class="topics-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="messenger-section" class="section">
+                <div class="window">
+                    <div class="window-title">
+                        <span>:: private messages ::</span>
+                    </div>
+                    <div class="window-content">
+                        <div class="messenger-layout">
+                            <div class="users-list">
+                                <h3>online users:</h3>
+                                <div id="online-users"></div>
+                            </div>
+                            <div class="chat-area">
+                                <div id="private-chat-messages" class="messages-container"></div>
+                                <form id="private-chat-form" class="chat-input">
+                                    <input type="text" id="private-chat-input" placeholder="select a user to chat..." required>
+                                    <button type="submit" class="btn-send">[ send ]</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>~ made with <3 by geeny ~ best viewed in netscape navigator ~</p>
+            <p class="visitor-counter">visitors: <span id="visitor-count">000000</span></p>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
+    
+    <script>
+        // ============================================
+        // ВАЖНО: Замени эти данные на свои из Firebase!
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCKa3-YQd0XjC_VW07lHNvfw-TMWVp-Zbg",
+            authDomain: "geenyz-restplace.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+            projectId: "geenyz-restplace",
+            storageBucket: "geenyz-restplace.firebasestorage.app",
+            messagingSenderId: "642497027423",
+            appId: "1:642497027423:web:1d72280e3ff0141abaeaea"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+        
+        // Google провайдер
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+        let currentUser = null;
+        let currentChatUser = null;
+
+        // ============================================
+        // АУТЕНТИФИКАЦИЯ
+        // ============================================
+        
+        function showLogin() {
+            document.getElementById('login-form').classList.add('active');
+            document.getElementById('register-form').classList.remove('active');
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            document.querySelectorAll('.tab-btn')[1].classList.remove('active');
+        }
+
+        function showRegister() {
+            document.getElementById('register-form').classList.add('active');
+            document.getElementById('login-form').classList.remove('active');
+            document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            document.querySelectorAll('.tab-btn')[0].classList.remove('active');
+        }
+
+        // Google Sign-In
+        async function googleSignIn() {
+            try {
+                const result = await auth.signInWithPopup(googleProvider);
+                const user = result.user;
+                
+                // Проверяем, есть ли уже этот пользователь в БД
+                const userSnapshot = await database.ref('users/' + user.uid).once('value');
+                const userData = userSnapshot.val();
+                
+                if (!userData) {
+                    // Новый пользователь - показываем форму ввода никнейма
+                    currentUser = user;
+                    document.getElementById('auth-screen').classList.remove('active');
+                    document.getElementById('nickname-screen').classList.add('active');
+                } else {
+                    // Существующий пользователь - сразу входим
+                    alert('Welcome back, ' + userData.nickname + '!');
+                }
+            } catch (error) {
+                alert('Google Sign-In error: ' + error.message);
+            }
+        }
+
+        // Сохранение никнейма для нового Google-пользователя
+        document.getElementById('nickname-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const nickname = document.getElementById('new-nickname').value.trim();
+            
+            if (!nickname || !currentUser) return;
+            
+            try {
+                await database.ref('users/' + currentUser.uid).set({
+                    email: currentUser.email,
+                    nickname: nickname,
+                    createdAt: Date.now(),
+                    online: true,
+                    provider: 'google'
+                });
+                
+                document.getElementById('nickname-screen').classList.remove('active');
+                alert('Nickname saved! Welcome, ' + nickname + '!');
+            } catch (error) {
+                alert('Error saving nickname: ' + error.message);
+            }
+        });
+
+        // Регистрация
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('register-email').value;
+            const nickname = document.getElementById('register-nickname').value;
+            const password = document.getElementById('register-password').value;
+
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                
+                await database.ref('users/' + userCredential.user.uid).set({
+                    email: email,
+                    nickname: nickname,
+                    createdAt: Date.now(),
+                    online: true,
+                    provider: 'email'
+                });
+
+                alert('Account created successfully!');
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+
+        // Вход
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                alert('Welcome back!');
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+
+        // Отслеживание состояния аутентификации
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                
+                const userSnapshot = await database.ref('users/' + user.uid).once('value');
+                const userData = userSnapshot.val();
+                
+                if (userData) {
+                    currentUser.nickname = userData.nickname;
+                    
+                    await database.ref('users/' + user.uid + '/online').set(true);
+                    
+                    document.getElementById('auth-screen').classList.remove('active');
+                    document.getElementById('nickname-screen').classList.remove('active');
+                    document.getElementById('main-screen').classList.add('active');
+                    
+                    loadChat();
+                    loadForumTopics();
+                    loadOnlineUsers();
+                }
+            } else {
+                currentUser = null;
+                document.getElementById('auth-screen').classList.add('active');
+                document.getElementById('main-screen').classList.remove('active');
+                document.getElementById('nickname-screen').classList.remove('active');
+            }
+        });
+
+        function logout() {
+            if (currentUser) {
+                database.ref('users/' + currentUser.uid + '/online').set(false);
+            }
+            auth.signOut();
+        }
+
+        window.addEventListener('beforeunload', () => {
+            if (currentUser) {
+                database.ref('users/' + currentUser.uid + '/online').set(false);
+            }
+        });
+
+        // ============================================
+        // НАВИГАЦИЯ
+        // ============================================
+        
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(section + '-section').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============================================
+        // ГЛОБАЛЬНЫЙ ЧАТ
+        // ============================================
+        
+        function loadChat() {
+            const chatRef = database.ref('chat').orderByChild('timestamp').limitToLast(50);
+            
+            chatRef.on('child_added', (snapshot) => {
+                const message = snapshot.val();
+                displayChatMessage(message);
+            });
+        }
+
+        function displayChatMessage(message) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            
+            const time = new Date(message.timestamp).toLocaleTimeString();
+            
+            messageDiv.innerHTML = `
+                <span class="message-author">${escapeHtml(message.nickname)}:</span>
+                <span class="message-time">${time}</span>
+                <div class="message-text">${escapeHtml(message.text)}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        document.getElementById('chat-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            
+            if (!text || !currentUser) return;
+            
+            const message = {
+                uid: currentUser.uid,
+                nickname: currentUser.nickname,
+                text: text,
+                timestamp: Date.now()
+            };
+            
+            await database.ref('chat').push(message);
+            input.value = '';
+        });
+
+        // ============================================
+        // ФОРУМ
+        // ============================================
+        
+        function showNewTopicForm() {
+            document.getElementById('new-topic-form').classList.remove('hidden');
+        }
+
+        function hideNewTopicForm() {
+            document.getElementById('new-topic-form').classList.add('hidden');
+        }
+
+        async function createTopic() {
+            const title = document.getElementById('topic-title').value.trim();
+            const content = document.getElementById('topic-content').value.trim();
+            
+            if (!title || !content || !currentUser) return;
+            
+            const topic = {
+                title: title,
+                content: content,
+                author: currentUser.nickname,
+                authorUid: currentUser.uid,
+                createdAt: Date.now(),
+                replies: []
+            };
+            
+            await database.ref('forum').push(topic);
+            
+            document.getElementById('topic-title').value = '';
+            document.getElementById('topic-content').value = '';
+            hideNewTopicForm();
+        }
+
+        function loadForumTopics() {
+            const forumRef = database.ref('forum').orderByChild('createdAt');
+            
+            forumRef.on('child_added', (snapshot) => {
+                const topic = snapshot.val();
+                const topicId = snapshot.key;
+                displayTopic(topic, topicId);
+            });
+        }
+
+        function displayTopic(topic, topicId) {
+            const topicsList = document.getElementById('forum-topics');
+            const topicDiv = document.createElement('div');
+            topicDiv.className = 'topic';
+            topicDiv.id = 'topic-' + topicId;
+            
+            const date = new Date(topic.createdAt).toLocaleDateString();
+            
+            topicDiv.innerHTML = `
+                <div class="topic-title">${escapeHtml(topic.title)}</div>
+                <div class="topic-meta">by ${escapeHtml(topic.author)} on ${date}</div>
+                <div class="topic-content">${escapeHtml(topic.content)}</div>
+                <div class="replies" id="replies-${topicId}"></div>
+                <form class="reply-form" onsubmit="addReply(event, '${topicId}')">
+                    <input type="text" placeholder="write a reply..." required>
+                    <button type="submit" class="btn-send">[ reply ]</button>
+                </form>
+            `;
+            
+            topicsList.appendChild(topicDiv);
+            loadReplies(topicId);
+        }
+
+        function loadReplies(topicId) {
+            const repliesRef = database.ref('forum/' + topicId + '/replies');
+            
+            repliesRef.on('child_added', (snapshot) => {
+                const reply = snapshot.val();
+                displayReply(topicId, reply);
+            });
+        }
+
+        function displayReply(topicId, reply) {
+            const repliesDiv = document.getElementById('replies-' + topicId);
+            const replyDiv = document.createElement('div');
+            replyDiv.className = 'reply';
+            
+            replyDiv.innerHTML = `
+                <strong>${escapeHtml(reply.author)}:</strong> ${escapeHtml(reply.text)}
+            `;
+            
+            repliesDiv.appendChild(replyDiv);
+        }
+
+        async function addReply(event, topicId) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const input = form.querySelector('input');
+            const text = input.value.trim();
+            
+            if (!text || !currentUser) return;
+            
+            const reply = {
+                author: currentUser.nickname,
+                text: text,
+                timestamp: Date.now()
+            };
+            
+            await database.ref('forum/' + topicId + '/replies').push(reply);
+            input.value = '';
+        }
+
+        // ============================================
+        // МЕССЕНДЖЕР
+        // ============================================
+        
+        function loadOnlineUsers() {
+            const usersRef = database.ref('users');
+            
+            usersRef.on('value', (snapshot) => {
+                const users = snapshot.val();
+                const onlineUsersDiv = document.getElementById('online-users');
+                onlineUsersDiv.innerHTML = '';
+                
+                for (const uid in users) {
+                    if (uid !== currentUser.uid && users[uid].online) {
+                        const userDiv = document.createElement('div');
+                        userDiv.className = 'user-item';
+                        userDiv.textContent = users[uid].nickname;
+                        userDiv.onclick = () => selectChatUser(uid, users[uid].nickname);
+                        onlineUsersDiv.appendChild(userDiv);
+                    }
+                }
+            });
+        }
+
+        function selectChatUser(uid, nickname) {
+            currentChatUser = { uid, nickname };
+            
+            document.querySelectorAll('.user-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.textContent === nickname) {
+                    item.classList.add('active');
+                }
+            });
+            
+            document.getElementById('private-chat-input').placeholder = `message ${nickname}...`;
+            document.getElementById('private-chat-messages').innerHTML = '';
+            
+            loadPrivateChat(uid);
+        }
+
+        function loadPrivateChat(otherUid) {
+            const chatId = getChatId(currentUser.uid, otherUid);
+            const messagesRef = database.ref('private_messages/' + chatId).orderByChild('timestamp');
+            
+            messagesRef.on('child_added', (snapshot) => {
+                const message = snapshot.val();
+                displayPrivateMessage(message);
+            });
+        }
+
+        function displayPrivateMessage(message) {
+            const chatMessages = document.getElementById('private-chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            
+            const time = new Date(message.timestamp).toLocaleTimeString();
+            
+            messageDiv.innerHTML = `
+                <span class="message-author">${escapeHtml(message.senderNickname)}:</span>
+                <span class="message-time">${time}</span>
+                <div class="message-text">${escapeHtml(message.text)}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        document.getElementById('private-chat-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const input = document.getElementById('private-chat-input');
+            const text = input.value.trim();
+            
+            if (!text || !currentUser || !currentChatUser) {
+                alert('Please select a user to chat with!');
+                return;
+            }
+            
+            const chatId = getChatId(currentUser.uid, currentChatUser.uid);
+            
+            const message = {
+                senderUid: currentUser.uid,
+                senderNickname: currentUser.nickname,
+                text: text,
+                timestamp: Date.now()
+            };
+            
+            await database.ref('private_messages/' + chatId).push(message);
+            input.value = '';
+        });
+
+        function getChatId(uid1, uid2) {
+            return uid1 < uid2 ? uid1 + '_' + uid2 : uid2 + '_' + uid1;
+        }
+
+        // ============================================
+        // УТИЛИТЫ
+        // ============================================
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        let visitorCount = Math.floor(Math.random() * 1000000);
+        setInterval(() => {
+            visitorCount += Math.floor(Math.random() * 10);
+            document.getElementById('visitor-count').textContent = visitorCount.toString().padStart(6, '0');
+        }, 5000);
+    </script>
+</body>
+</html>
